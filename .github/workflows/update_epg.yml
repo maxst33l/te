@@ -1,0 +1,31 @@
+name: Daily EPG Downloader
+
+on:
+  schedule:
+    # Runs automatically every day at 4:00 AM UTC
+    - cron: '0 4 * * *'
+  workflow_dispatch: # Allows you to run it manually anytime
+
+jobs:
+  download-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download EPG File
+        run: |
+          # Create a directory if needed
+          mkdir -p docs
+          # Download the file, follow redirects (-L), and save it as guide.xml.gz
+          curl -L "${{ secrets.TREX_WRLD_EPG }}" -o docs/guide.xml.gz
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "EPG Bot"
+          git config --global user.email "epg-bot@github.com"
+          git add docs/guide.xml.gz
+          git diff-index --quiet HEAD || git commit -m "Daily EPG update"
+          git push
+
+# https://raw.githubusercontent.com/maxst33l/trexepg/main/docs/guide.xml.gz
