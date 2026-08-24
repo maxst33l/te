@@ -3,7 +3,7 @@ name: Daily EPG Downloader
 on:
   schedule:
     # Runs automatically every day at 4:00 AM UTC
-    - cron: '0 4 * * *'
+    #- cron: '0 4 * * *'
   workflow_dispatch: # Allows you to run it manually anytime
 
 jobs:
