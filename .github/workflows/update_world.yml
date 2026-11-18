@@ -24,7 +24,7 @@ jobs:
         run: |
           git config --global user.name "World Bot"
           git config --global user.email "world-bot@github.com"
-          git add docs/guide.xml.gz
+          git add docs/world.xml.gz
           git diff-index --quiet HEAD || git commit -m "Daily update"
           git push
 
