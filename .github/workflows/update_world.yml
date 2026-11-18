@@ -25,7 +25,20 @@ jobs:
           git config --global user.name "World Bot"
           git config --global user.email "world-bot@github.com"
           git add docs/world.xml.gz
-          git diff-index --quiet HEAD || git commit -m "Daily update"
-          git push
+          if git diff-index --quiet HEAD; then
+            echo "STATUS: world.xml.gz is unchanged. Skipping commit."
+          else
+            echo "STATUS: world.xml.gz was updated! Committing and pushing..."
+            git commit -m "Scheduled update"
+            git push
+          fi
+
+      #- name: Commit and Push Changes
+      #  run: |
+      #    git config --global user.name "World Bot"
+      #    git config --global user.email "world-bot@github.com"
+      #    git add docs/world.xml.gz
+      #    git diff-index --quiet HEAD || git commit -m "Daily update"
+      #    git push
 
 
