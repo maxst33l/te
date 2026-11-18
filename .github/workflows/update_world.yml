@@ -1,4 +1,4 @@
-name: Daily EPG Downloader
+name: Daily Downloader
 
 on:
   schedule:
@@ -13,20 +13,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v5
 
-      - name: Download EPG File
+      - name: Download File
         run: |
           # Create a directory if needed
           mkdir -p docs
           # Download the file, follow redirects (-L), and save it as guide.xml.gz
-          curl -L "${{ secrets.TREX_WRLD_EPG }}" -o docs/guide.xml.gz
+          curl -L "${{ secrets.WORLD }}" -o docs/world.xml.gz
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "EPG Bot"
-          git config --global user.email "epg-bot@github.com"
+          git config --global user.name "World Bot"
+          git config --global user.email "world-bot@github.com"
           git add docs/guide.xml.gz
-          git diff-index --quiet HEAD || git commit -m "Daily EPG update"
+          git diff-index --quiet HEAD || git commit -m "Daily update"
           git push
 
-# https://raw.githubusercontent.com/maxst33l/trexepg/main/docs/guide.xml.gz
-# Nov 17 2026 - https://github.com/maxst33l/trexepg/raw/refs/heads/main/docs/guide.xml.gz
+
